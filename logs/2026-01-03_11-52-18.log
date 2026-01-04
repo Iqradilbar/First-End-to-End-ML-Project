@@ -1,0 +1,7 @@
+[2026-01-03 11:52:21,075] INFO - NumExpr defaulting to 2 threads.
+[2026-01-03 11:52:26,013] INFO - Entered the data ingestion method
+[2026-01-03 11:52:26,114] INFO - Read the dataset as dataframe with shape: (1000, 8)
+[2026-01-03 11:52:26,119] INFO - Created artifacts directory
+[2026-01-03 11:52:26,128] INFO - Raw data saved
+[2026-01-03 11:52:26,149] INFO - Train test split completed
+[2026-01-03 11:52:26,171] INFO - Data ingestion completed successfully

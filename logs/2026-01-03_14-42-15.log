@@ -1,0 +1,6 @@
+[2026-01-03 14:42:16,058] WARNING -  * Debugger is active!
+[2026-01-03 14:42:16,067] INFO -  * Debugger PIN: 583-605-778
+[2026-01-03 14:42:16,784] INFO - 127.0.0.1 - - [03/Jan/2026 14:42:16] "[35m[1mGET /predictdata HTTP/1.1[0m" 500 -
+[2026-01-03 14:42:17,208] INFO - 127.0.0.1 - - [03/Jan/2026 14:42:17] "[36mGET /predictdata?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+[2026-01-03 14:42:17,213] INFO - 127.0.0.1 - - [03/Jan/2026 14:42:17] "[36mGET /predictdata?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+[2026-01-03 14:42:17,348] INFO - 127.0.0.1 - - [03/Jan/2026 14:42:17] "GET /predictdata?__debugger__=yes&cmd=resource&f=console.png&s=hm9vLXV5ilVRyhjSmRmX HTTP/1.1" 200 -

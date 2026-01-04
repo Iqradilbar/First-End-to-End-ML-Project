@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator & Prediction System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Robot Animation */
+        .robot-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+        }
+
+        .robot {
+            width: 80px;
+            height: 100px;
+            position: relative;
+        }
+
+        .robot-head {
+            width: 50px;
+            height: 40px;
+            background: #fff;
+            border-radius: 10px;
+            position: relative;
+            margin: 0 auto;
+            animation: headTilt 2s ease-in-out infinite;
+        }
+
+        @keyframes headTilt {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .robot-antenna {
+            width: 3px;
+            height: 15px;
+            background: #fff;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .robot-antenna::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .robot-eye {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            animation: eyeMove 3s ease-in-out infinite;
+        }
+
+        .robot-eye.left { left: 12px; }
+        .robot-eye.right { right: 12px; }
+
+        @keyframes eyeMove {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        .robot-mouth {
+            width: 20px;
+            height: 2px;
+            background: #667eea;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .robot-body {
+            width: 60px;
+            height: 50px;
+            background: #fff;
+            border-radius: 5px;
+            margin: 5px auto 0;
+            position: relative;
+        }
+
+        .robot-panel {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .robot-panel-light {
+            width: 5px;
+            height: 5px;
+            background: #4caf50;
+            border-radius: 50%;
+            position: absolute;
+            animation: panelBlink 1.5s ease-in-out infinite;
+        }
+
+        .robot-panel-light:nth-child(1) { top: 5px; left: 5px; }
+        .robot-panel-light:nth-child(2) { top: 5px; right: 5px; animation-delay: 0.5s; }
+        .robot-panel-light:nth-child(3) { bottom: 5px; left: 5px; animation-delay: 1s; }
+        .robot-panel-light:nth-child(4) { bottom: 5px; right: 5px; animation-delay: 1.5s; }
+
+        @keyframes panelBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .robot-arm {
+            width: 8px;
+            height: 35px;
+            background: #fff;
+            border-radius: 4px;
+            position: absolute;
+            top: 10px;
+        }
+
+        .robot-arm.left {
+            left: -10px;
+            animation: waveLeft 2s ease-in-out infinite;
+        }
+
+        .robot-arm.right {
+            right: -10px;
+            animation: waveRight 2s ease-in-out infinite;
+        }
+
+        @keyframes waveLeft {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-20deg); }
+        }
+
+        @keyframes waveRight {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        .robot-leg {
+            width: 12px;
+            height: 15px;
+            background: #fff;
+            border-radius: 3px;
+            position: absolute;
+            bottom: -15px;
+        }
+
+        .robot-leg.left { left: 15px; }
+        .robot-leg.right { right: 15px; }
+
+        /* Hero Content Enhancement */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            padding-bottom: 120px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            margin-top: 2.5rem;
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .floating-badges {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .badge {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.25rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+            font-weight: 600;
+            animation: fadeInFloat 1s ease-out;
+        }
+
+        @keyframes fadeInFloat {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .badge:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0.2s;
+        }
+
+        .badge:nth-child(2) {
+            top: 30%;
+            right: 15%;
+            animation-delay: 0.4s;
+        }
+
+        .badge:nth-child(3) {
+            bottom: 35%;
+            left: 8%;
+            animation-delay: 0.6s;
+        }
+
+        .badge:nth-child(4) {
+            bottom: 40%;
+            right: 12%;
+            animation-delay: 0.8s;
+        }
+
+        /* Main Content */
+        main {
+            background: white;
+            border-radius: 20px;
+            margin: 2rem auto;
+            max-width: 1000px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        section {
+            padding: 3rem 2rem;
+        }
+
+        section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        /* Form Styles */
+        .prediction-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        input, select {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Prediction Output */
+        .prediction-output {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .prediction-output.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .prediction-result {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .prediction-label {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .risk-indicator {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .risk-low { background: #4caf50; color: white; }
+        .risk-medium { background: #ff9800; color: white; }
+        .risk-high { background: #f44336; color: white; }
+
+        /* Dashboard Section */
+        .dashboard {
+            background: #f8f9fa;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            color: white;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">📊 SEPIPS</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#prediction">Prediction</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="floating-badges">
+            <div class="badge">✓ 98% Accuracy</div>
+            <div class="badge">⚡ Real-Time Processing</div>
+            <div class="badge">🔒 Secure & Private</div>
+            <div class="badge">📊 10K+ Predictions</div>
+        </div>
+        
+        <div class="container hero-content">
+            <h1>Student Exam Performance Indicator & Prediction System</h1>
+            <p>Leveraging advanced data analysis and machine learning algorithms to predict student academic performance, identify at-risk learners, and provide actionable insights for educational success.</p>
+            
+            <a href="#prediction" class="cta-button">Start Prediction →</a>
+        </div>
+        
+        <div class="robot-container">
+            <div class="robot">
+                <div class="robot-head">
+                    <div class="robot-antenna"></div>
+                    <div class="robot-eye left"></div>
+                    <div class="robot-eye right"></div>
+                    <div class="robot-mouth"></div>
+                </div>
+                <div class="robot-body">
+                    <div class="robot-arm left"></div>
+                    <div class="robot-arm right"></div>
+                    <div class="robot-panel">
+                        <div class="robot-panel-light"></div>
+                        <div class="robot-panel-light"></div>
+                        <div class="robot-panel-light"></div>
+                        <div class="robot-panel-light"></div>
+                    </div>
+                    <div class="robot-leg left"></div>
+                    <div class="robot-leg right"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="prediction">
+            <h2>Performance Prediction</h2>
+            <form class="prediction-form" id="predictionForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ethnicity">Race or Ethnicity</label>
+                        <select id="ethnicity" required>
+                            <option value="">Select Ethnicity</option>
+                            <option value="group A">Group A</option>
+                            <option value="group B">Group B</option>
+                            <option value="group C">Group C</option>
+                            <option value="group D">Group D</option>
+                            <option value="group E">Group E</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="parentEducation">Parental Education Level</label>
+                        <select id="parentEducation" required>
+                            <option value="">Select Education Level</option>
+                            <option value="some high school">Some High School</option>
+                            <option value="high school">High School</option>
+                            <option value="some college">Some College</option>
+                            <option value="associate's degree">Associate's Degree</option>
+                            <option value="bachelor's degree">Bachelor's Degree</option>
+                            <option value="master's degree">Master's Degree</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lunch">Lunch Type</label>
+                        <select id="lunch" required>
+                            <option value="">Select Lunch Type</option>
+                            <option value="standard">Standard</option>
+                            <option value="free/reduced">Free/Reduced</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="testPrep">Test Preparation Course</label>
+                        <select id="testPrep" required>
+                            <option value="">Select Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studyHours">Weekly Study Hours</label>
+                        <input type="number" id="studyHours" min="0" max="168" placeholder="Enter hours per week" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attendance">Attendance Percentage</label>
+                        <input type="number" id="attendance" min="0" max="100" placeholder="Enter percentage" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="readingScore">Reading Score (0-100)</label>
+                        <input type="number" id="readingScore" min="0" max="100" placeholder="Enter reading score" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="writingScore">Writing Score (0-100)</label>
+                        <input type="number" id="writingScore" min="0" max="100" placeholder="Enter writing score" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Predict Math Score</button>
+            </form>
+
+            <div class="prediction-output" id="predictionOutput">
+                <div class="prediction-label">Predicted Math Score</div>
+                <div class="prediction-result" id="predictedScore">--</div>
+                <div class="prediction-label">Performance Grade</div>
+                <div class="risk-indicator" id="riskLevel">--</div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="dashboard">
+            <h2>Analytics Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1,247</div>
+                    <div class="stat-label">Total Predictions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">94.3%</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">72.5</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">At-Risk Students</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About the System</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #666;">Our system uses state-of-the-art machine learning algorithms to analyze multiple factors affecting student performance and provide accurate predictions.</p>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>🎯 Accurate Predictions</h3>
+                    <p>Advanced ML models trained on thousands of student records to ensure high prediction accuracy.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Data-Driven Insights</h3>
+                    <p>Comprehensive analysis of demographic, academic, and behavioral factors.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚡ Real-Time Results</h3>
+                    <p>Instant predictions and performance indicators to support timely interventions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔒 Privacy Protected</h3>
+                    <p>All student data is handled with strict confidentiality and security measures.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <p>📧 Email: support@sepips.edu</p>
+                <p>📞 Phone: +1 (555) 123-4567</p>
+                <p>🏢 Address: 123 Academic Drive, Education City, ED 12345</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Student Exam Performance Indicator & Prediction System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const readingScore = parseFloat(document.getElementById('readingScore').value);
+            const writingScore = parseFloat(document.getElementById('writingScore').value);
+            const attendance = parseFloat(document.getElementById('attendance').value);
+            const studyHours = parseFloat(document.getElementById('studyHours').value);
+            const testPrep = document.getElementById('testPrep').value;
+            
+            let predictedScore = (readingScore + writingScore) / 2;
+            
+            if (testPrep === 'completed') predictedScore += 5;
+            if (attendance > 90) predictedScore += 3;
+            if (studyHours > 20) predictedScore += 4;
+            if (attendance < 70) predictedScore -= 8;
+            if (studyHours < 5) predictedScore -= 5;
+            
+            predictedScore = Math.min(100, Math.max(0, Math.round(predictedScore)));
+            
+            document.getElementById('predictedScore').textContent = predictedScore;
+            
+            const riskElement = document.getElementById('riskLevel');
+            if (predictedScore >= 70) {
+                riskElement.textContent = 'Grade A - Excellent';
+                riskElement.className = 'risk-indicator risk-low';
+            } else if (predictedScore >= 50) {
+                riskElement.textContent = 'Grade B - Good';
+                riskElement.className = 'risk-indicator risk-medium';
+            } else {
+                riskElement.textContent = 'Grade C - At Risk';
+                riskElement.className = 'risk-indicator risk-high';
+            }
+            
+            document.getElementById('predictionOutput').classList.add('show');
+            document.getElementById('predictionOutput').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

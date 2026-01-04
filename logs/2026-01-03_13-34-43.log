@@ -1,0 +1,14 @@
+[2026-01-03 13:34:45,321] INFO - NumExpr defaulting to 2 threads.
+[2026-01-03 13:34:51,975] INFO - Entered the data ingestion method
+[2026-01-03 13:34:51,995] INFO - Read the dataset as dataframe
+[2026-01-03 13:34:52,005] INFO - Raw data saved
+[2026-01-03 13:34:52,015] INFO - Train test split completed
+[2026-01-03 13:34:52,020] INFO - Data ingestion completed successfully
+[2026-01-03 13:34:52,126] INFO - Read train and test data completed
+[2026-01-03 13:34:52,126] INFO - Obtaining preprocessor object
+[2026-01-03 13:34:52,126] INFO - Numerical columns standard scaling completed
+[2026-01-03 13:34:52,126] INFO -  categorical columns encoding completed
+[2026-01-03 13:34:52,136] INFO - Applying preprocessing object on training and testing dataframes
+[2026-01-03 13:34:52,176] INFO - Saved preprocessing object
+[2026-01-03 13:34:52,186] INFO - Split training and test input data
+[2026-01-03 13:34:54,978] INFO - Best model found on both training and testing dataset

@@ -1,0 +1,11 @@
+[2026-01-03 15:02:29,169] WARNING -  * Debugger is active!
+[2026-01-03 15:02:29,182] INFO -  * Debugger PIN: 583-605-778
+[2026-01-03 15:02:29,226] INFO - 127.0.0.1 - - [03/Jan/2026 15:02:29] "GET / HTTP/1.1" 200 -
+[2026-01-03 15:02:29,550] INFO - 127.0.0.1 - - [03/Jan/2026 15:02:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2026-01-03 15:02:37,356] INFO - 127.0.0.1 - - [03/Jan/2026 15:02:37] "GET /predictdata HTTP/1.1" 200 -
+[2026-01-03 15:03:00,643] INFO - 127.0.0.1 - - [03/Jan/2026 15:03:00] "POST /predictdata HTTP/1.1" 200 -
+[2026-01-03 15:10:12,722] INFO - 127.0.0.1 - - [03/Jan/2026 15:10:12] "POST /predictdata HTTP/1.1" 200 -
+[2026-01-03 15:15:29,389] INFO - 127.0.0.1 - - [03/Jan/2026 15:15:29] "[33mGET /home HTTP/1.1[0m" 404 -
+[2026-01-03 15:15:33,235] INFO - 127.0.0.1 - - [03/Jan/2026 15:15:33] "GET /predictdata HTTP/1.1" 200 -
+[2026-01-03 15:15:37,638] INFO - 127.0.0.1 - - [03/Jan/2026 15:15:37] "GET / HTTP/1.1" 200 -
+[2026-01-03 15:20:10,641] INFO -  * Detected change in 'E:\\IQ Floder\\Machine learing\\Projects\\First end to end ML Project\\app.py', reloading

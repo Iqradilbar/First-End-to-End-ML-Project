@@ -1,0 +1,6 @@
+[2026-01-03 15:20:19,539] WARNING -  * Debugger is active!
+[2026-01-03 15:20:19,549] INFO -  * Debugger PIN: 583-605-778
+[2026-01-03 15:20:19,604] INFO - 127.0.0.1 - - [03/Jan/2026 15:20:19] "[33mGET /predictdata HTTP/1.1[0m" 404 -
+[2026-01-03 15:20:24,831] INFO - 127.0.0.1 - - [03/Jan/2026 15:20:24] "GET / HTTP/1.1" 200 -
+[2026-01-03 15:21:49,252] INFO - 127.0.0.1 - - [03/Jan/2026 15:21:49] "GET / HTTP/1.1" 200 -
+[2026-01-03 16:18:43,284] INFO -  * Detected change in 'E:\\IQ Floder\\Machine learing\\Projects\\First end to end ML Project\\src\\components\\model_trainer.py', reloading
